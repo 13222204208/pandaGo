@@ -9,6 +9,7 @@ import (
 	_ "server/internal/logic/crontab"
 	_ "server/internal/logic/dictdata"
 	_ "server/internal/logic/dicttype"
+	_ "server/internal/logic/generate"
 	_ "server/internal/logic/login"
 	_ "server/internal/logic/menu"
 	_ "server/internal/logic/permission"

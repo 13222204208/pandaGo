@@ -84,11 +84,11 @@ type MenuTreeItem struct {
 
 // MenuMeta 菜单元数据
 type MenuMeta struct {
-	Icon     string   `json:"icon"`               // 图标
-	Title    string   `json:"title"`              // 标题
-	Rank     int      `json:"rank,omitempty"`     // 排序
-	Roles    []string `json:"roles,omitempty"`    // 角色
-	HideMenu bool     `json:"hideMenu,omitempty"` // 是否隐藏菜单
+	Icon     string   `json:"icon"`            // 图标
+	Title    string   `json:"title"`           // 标题
+	Rank     int      `json:"rank,omitempty"`  // 排序
+	Roles    []string `json:"roles,omitempty"` // 角色
+	ShowLink bool     `json:"showLink"`        // 是否隐藏菜单
 }
 
 // GetUserMenuTreeReq GetMenuTreeReq 获取用户菜单树

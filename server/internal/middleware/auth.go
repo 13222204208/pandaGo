@@ -25,7 +25,7 @@ func Auth(r *ghttp.Request) {
 	}
 
 	// 添加调试信息
-	fmt.Printf("收到的token: %s\n", token)
+	//fmt.Printf("收到的token: %s\n", token)
 	utility.InitJwtConfig()
 	// 解析 token 获取用户 ID
 	userId, err := utility.GetUserIdFromToken(token)

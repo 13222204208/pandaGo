@@ -319,18 +319,21 @@ func (s *sUser) buildMenuTree(menus []*entity.PandaMenu, parentId int64) ([]*use
 			// 这里可以根据菜单ID查询关联的角色代码
 			// 简化处理，可以在菜单表中添加roles字段存储角色代码
 
+			// 处理菜单显示状态 0:隐藏 1:显示
+			showLink := m.ShowLink == 1
+
 			item := &user.MenuTreeItem{
 				Path:      m.Path,
 				Component: m.Component,
 				Name:      m.Name,
 				Meta: user.MenuMeta{
-					Icon:  m.Icon,
-					Title: m.Title,
-					Rank:  m.Rank,
-					Roles: roles,
+					Icon:     m.Icon,
+					Title:    m.Title,
+					Rank:     m.Rank,
+					Roles:    roles,
+					ShowLink: showLink,
 				},
 			}
-
 			// 递归查询子菜单
 			children, err := s.buildMenuTree(menus, m.Id)
 			if err != nil {

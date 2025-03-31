@@ -25,13 +25,6 @@ export function useRole(tableRef: Ref) {
 
   const columns: TableColumnList = [
     {
-      type: "selection",
-      width: 55,
-      align: "center",
-      fixed: "left",
-      reserveSelection: true
-    },
-    {
       label: "序号",
       type: "index",
       width: 80
@@ -95,6 +88,13 @@ export function useRole(tableRef: Ref) {
     tableRef.value.getTableRef().clearSelection();
   }
 
+  /** 删除 */
+  function handleDelete(row) {
+    // 根据实际业务，调用接口删除当前行数据
+    message(`${row.name}已被删除`, { type: "success" });
+    onSearch();
+  }
+
   /** 批量删除 */
   function onbatchDel() {
     // 返回当前选中的行
@@ -139,7 +139,7 @@ export function useRole(tableRef: Ref) {
       pagination.total = mockData.total;
       pagination.pageSize = mockData.pageSize;
       pagination.currentPage = mockData.currentPage;
-    } catch (error) {
+    } catch {
       message("获取列表失败", { type: "error" });
     } finally {
       loading.value = false;
@@ -171,10 +171,12 @@ export function useRole(tableRef: Ref) {
     dataList,
     pagination,
     selectedNum,
+    handleDelete,
     onSearch,
     clearAll,
     resetForm,
     onbatchDel,
+    handleEdit,
     handleSizeChange,
     onSelectionCancel,
     handleCurrentChange,

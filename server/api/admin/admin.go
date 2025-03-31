@@ -11,6 +11,7 @@ import (
 	"server/api/admin/crontab"
 	"server/api/admin/dictdata"
 	"server/api/admin/dicttype"
+	"server/api/admin/generate"
 	"server/api/admin/login"
 	"server/api/admin/menu"
 	"server/api/admin/role"
@@ -44,6 +45,13 @@ type IAdminDicttype interface {
 	Delete(ctx context.Context, req *dicttype.DeleteReq) (res *dicttype.DeleteRes, err error)
 	Update(ctx context.Context, req *dicttype.UpdateReq) (res *dicttype.UpdateRes, err error)
 	GetList(ctx context.Context, req *dicttype.GetListReq) (res *dicttype.GetListRes, err error)
+}
+
+type IAdminGenerate interface {
+	GetTables(ctx context.Context, req *generate.GetTablesReq) (res *generate.GetTablesRes, err error)
+	GetTableColumns(ctx context.Context, req *generate.GetTableColumnsReq) (res *generate.GetTableColumnsRes, err error)
+	GenerateSql(ctx context.Context, req *generate.GenerateSqlReq) (res *generate.GenerateSqlRes, err error)
+	ExecuteSql(ctx context.Context, req *generate.ExecuteSqlReq) (res *generate.ExecuteSqlRes, err error)
 }
 
 type IAdminLogin interface {

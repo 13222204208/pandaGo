@@ -9,11 +9,15 @@ import { ElMessage } from "element-plus";
 import Delete from "@iconify-icons/ep/delete";
 import Refresh from "@iconify-icons/ep/refresh";
 import ImportTable from "./import.vue";
+import SqlPreview from "./sql.vue"; // 添加这行
 // 添加图标导入
 import EditPen from "@iconify-icons/ep/edit-pen";
 import Preview from "@iconify-icons/ep/view";
 import Sync from "@iconify-icons/ep/refresh";
 import Code from "@iconify-icons/ep/document";
+
+// 添加 router 导入
+import { useRouter } from "vue-router";
 
 defineOptions({
   name: "Generate"
@@ -21,7 +25,8 @@ defineOptions({
 
 const formRef = ref();
 const tableRef = ref();
-const importVisible = ref(false); // 添加导入弹窗的显示控制
+const importVisible = ref(false);
+const sqlVisible = ref(false); // 添加这行
 
 const {
   form,
@@ -34,34 +39,18 @@ const {
   clearAll,
   resetForm,
   onbatchDel,
-  // handleEdit,  // 如果hook中没有这个函数，注释掉
-  // handleDelete, // 如果hook中没有这个函数，注释掉
+  handleDelete, // 如果hook中没有这个函数，注释掉
   handleSizeChange,
   onSelectionCancel,
   handleCurrentChange,
   handleSelectionChange
 } = useRole(tableRef);
 
-// 自定义编辑处理函数
-const handleEdit = (row: TableRow) => {
-  ElMessage.info(`编辑表：${row.name}`);
-};
-
-// 自定义删除处理函数
-const handleDelete = (row: TableRow) => {
-  ElMessage.info(`删除表：${row.name}`);
-  onSearch(); // 刷新表格数据
-};
-
-// 修改配置
-const onEdit = () => {
-  if (selectedNum.value !== 1) {
-    ElMessage.warning("请选择一条记录");
-    return;
-  }
-  const selected = tableRef.value.getTableRef().getSelectionRows()[0];
-  handleEdit(selected);
-};
+// // 自定义删除处理函数
+// const handleDelete = (row: TableRow) => {
+//   ElMessage.info(`删除表：${row.name}`);
+//   onSearch(); // 刷新表格数据
+// };
 
 // 生成代码
 const onGenerate = () => {
@@ -70,7 +59,7 @@ const onGenerate = () => {
 
 // 新增配置
 const onCreate = () => {
-  ElMessage.info("新增功能开发中");
+  sqlVisible.value = true;
 };
 
 // 导入配置
@@ -98,6 +87,21 @@ const handleSync = (row: TableRow) => {
 
 const handleGenerate = (row: TableRow) => {
   ElMessage.info(`生成代码：${row.name}`);
+};
+
+// 获取路由实例
+const router = useRouter();
+
+// 修改编辑处理函数
+const handleEdit = (row: TableRow) => {
+  console.log("编辑表：", row);
+  router.push({
+    path: "/develop/generate/edit",
+    query: {
+      id: row.id,
+      tableName: row.name
+    }
+  });
 };
 </script>
 
@@ -153,31 +157,19 @@ const handleGenerate = (row: TableRow) => {
     <PureTableBar title="代码生成配置" :columns="columns" @refresh="onSearch">
       <template #buttons>
         <el-button
+          type="primary"
+          :icon="useRenderIcon('ep:plus')"
+          @click="onCreate"
+        >
+          创建表
+        </el-button>
+        <el-button
           type="success"
           :icon="useRenderIcon('ep:upload')"
           @click="onImport"
         >
-          导入
+          导入表
         </el-button>
-        <el-button
-          type="info"
-          :icon="useRenderIcon('ep:document')"
-          :disabled="!selectedNum"
-          @click="onGenerate"
-        >
-          生成代码
-        </el-button>
-        <el-popconfirm title="是否确认删除选中数据?" @confirm="onbatchDel">
-          <template #reference>
-            <el-button
-              type="danger"
-              :icon="useRenderIcon('ep:delete')"
-              :disabled="!selectedNum"
-            >
-              删除
-            </el-button>
-          </template>
-        </el-popconfirm>
       </template>
       <template v-slot="{ size, dynamicColumns }">
         <div
@@ -285,6 +277,7 @@ const handleGenerate = (row: TableRow) => {
     </PureTableBar>
 
     <ImportTable v-model:visible="importVisible" />
+    <SqlPreview v-model:visible="sqlVisible" />
   </div>
 </template>
 

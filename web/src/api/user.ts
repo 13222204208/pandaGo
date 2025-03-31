@@ -87,6 +87,7 @@ export interface MenuItem {
   component: string;
   name: string;
   meta: MenuMeta;
+  showLink?: boolean;
   children?: MenuItem[];
 }
 

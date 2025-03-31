@@ -24,7 +24,7 @@ export function useRole(treeRef: Ref) {
   const form = reactive({
     name: "",
     code: "",
-    status: 1
+    status: undefined
   });
   const curRow = ref();
   const formRef = ref();
@@ -264,6 +264,12 @@ export function useRole(treeRef: Ref) {
 
   /** 菜单权限 */
   async function handleMenu(row?: any) {
+    if (!row) {
+      curRow.value = null;
+      isShow.value = false;
+      return;
+    }
+
     const { id } = row;
     if (id) {
       curRow.value = row;

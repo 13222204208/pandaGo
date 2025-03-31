@@ -29,6 +29,7 @@ func InitAdminRouter() {
 			admin.NewAttachment(), // 附件管理
 			admin.NewCrontab(),    // 定时任务
 			admin.NewMenu(),       // 菜单管理
+			admin.NewGenerate(),   // 代码生成
 		)
 	})
 }

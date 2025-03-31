@@ -136,7 +136,7 @@ func InitJwtConfig() {
 
 	// 从配置文件读取JWT密钥
 	secret := g.Cfg().MustGet(ctx, "jwt.secret").String()
-	fmt.Println("secret:", secret)
+	//fmt.Println("secret:", secret)
 	if secret != "" {
 		jwtSecret = []byte(secret)
 	}
@@ -150,5 +150,5 @@ func InitJwtConfig() {
 	if refreshExp := g.Cfg().MustGet(ctx, "jwt.refreshExpiration").Int(); refreshExp > 0 {
 		refreshExpiration = time.Duration(refreshExp) * time.Hour
 	}
-	fmt.Println("我的jwtSecret:", string(jwtSecret))
+	//fmt.Println("我的jwtSecret:", string(jwtSecret))
 }

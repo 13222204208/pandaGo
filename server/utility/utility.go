@@ -42,6 +42,23 @@ func FormatTime(timestamp int64) string {
 	return t.Format("2006-01-02 15:04:05")
 }
 
+func StrToFormatTime(timeStr string) string {
+	// 解析时间2025-03-25 02:07:37 +0800 CST
+	t, err := gtime.StrToTime(timeStr)
+	if err != nil {
+		fmt.Println("解析时间出错:", err)
+		return ""
+	}
+
+	// 格式化为2006-01-02 15:04:05格式
+	formatted := t.Format("Y-m-d H:i:s")
+	//fmt.Println("格式化后的时间:", formatted) // 输出: 2025-03-25 02:07:37
+	if formatted == "0001-01-01 00:00:00" {
+		return ""
+	}
+	return formatted
+}
+
 // FormatFileSize 格式化文件大小
 func FormatFileSize(fileSize int64) string {
 	if fileSize < 1024 {

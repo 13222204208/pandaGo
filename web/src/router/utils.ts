@@ -197,7 +197,7 @@ function initRouter() {
     // 开启动态路由缓存本地localStorage
     const key = "panda-routes";
     const asyncRouteList = storageLocal().getItem(key) as any;
-    console.log(asyncRouteList, "路由列表");
+    // console.log(asyncRouteList, "路由列表");
     if (asyncRouteList && asyncRouteList?.length > 0) {
       return new Promise(resolve => {
         handleAsyncRoutes(asyncRouteList);
@@ -206,6 +206,7 @@ function initRouter() {
     } else {
       return new Promise(resolve => {
         getUserMenuList().then(({ data }) => {
+          console.log(data, "路由的列表");
           handleAsyncRoutes(cloneDeep(data.menu));
           storageLocal().setItem(key, data.menu);
           resolve(router);

@@ -55,3 +55,9 @@ type ControllerMenu struct{}
 func NewMenu() admin.IAdminMenu {
 	return &ControllerMenu{}
 }
+
+type ControllerGenerate struct{}
+
+func NewGenerate() admin.IAdminGenerate {
+	return &ControllerGenerate{}
+}
